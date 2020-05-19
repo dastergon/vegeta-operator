@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vegeta-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: vegeta-operator
+  template:
+    metadata:
+      labels:
+        name: vegeta-operator
+    spec:
+      serviceAccountName: vegeta-operator
+      containers:
+        - name: vegeta-operator
+          image: quay.io/dastergon/vegeta-operator:v0.0.1
+          command:
+          - vegeta-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "vegeta-operator"

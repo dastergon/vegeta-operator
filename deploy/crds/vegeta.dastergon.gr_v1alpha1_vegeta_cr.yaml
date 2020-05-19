@@ -1,0 +1,11 @@
+apiVersion: vegeta.dastergon.gr/v1alpha1
+kind: Vegeta
+metadata:
+  name: example-vegeta
+spec: 
+  target: "http://127.0.0.1:8080/info"
+  attack:
+    duration: 1s
+    report:
+      output: report.json
+      type: json
