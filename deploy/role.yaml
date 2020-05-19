@@ -79,3 +79,12 @@ rules:
   - patch
   - update
   - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - list
+  - watch
+  - get
