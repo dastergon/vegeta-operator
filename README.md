@@ -9,7 +9,7 @@ The Vegeta Operator is currently in **alpha**.
 
 ## Overview
 
-The Operator supports most of the [current](https://github.com/tsenart/vegeta#usage-manual) features of Vegeta. Also, it has supports for storing generated reports to a remote blob storage system (bucket) via [rclone](https://rclone.org/). By default, Vegeta returns the generated report to the `stdout`. Consequently, you need to specify the output (filename) and the blob storage destination explicitly via the Custom Resource. Check the [CRD](deploy/crds/vegeta.dastergon.gr_vegeta_crd.yaml) spec for more options.
+The Operator supports most of the [current](https://github.com/tsenart/vegeta#usage-manual) features of Vegeta, and it also has the ability to store the generated reports to a remote blob storage system (bucket) via [rclone](https://rclone.org/). By default, Vegeta returns the generated report to the `stdout`. Consequently, you need to specify the output (filename) and the blob storage destination explicitly via the Custom Resource. Check the [CRD](deploy/crds/vegeta.dastergon.gr_vegeta_crd.yaml) spec for more options.
 
 Vegeta runs as a [Job](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/). Therefore, once it's done running the load testing scenario, no more Pods are created but the Pods are not deleted either. They are kept around in case we want to view(`kubectl logs`) the logs of completed pods. However, any local files (reports) inside the container are deleted once the Job is complete. To address this situation, there's support to store the generated report to remote blob storage of a cloud provider. 
 
