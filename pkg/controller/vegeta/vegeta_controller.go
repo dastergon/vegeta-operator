@@ -122,9 +122,10 @@ func (r *ReconcileVegeta) Reconcile(request reconcile.Request) (reconcile.Result
 
 		for {
 			err = r.client.Get(context.TODO(), types.NamespacedName{Name: job.Name, Namespace: job.Namespace}, found)
-			if err != nil && errors.IsNotFound(err) {
-				continue
-			} else if err != nil {
+			if err != nil {
+				if errors.IsNotFound(err) {
+					continue
+				}
 				reqLogger.Error(err, "Failed to retrieve object from Kubernetes", "Job.Namespace", job.Namespace, "Job.Name", job.Name)
 				return reconcile.Result{}, err
 			}
@@ -286,7 +287,7 @@ func assembleCommand(spec vegetav1alpha1.VegetaSpec) []string {
 	command := []string{}
 
 	if spec.Target != "" {
-		command = append(command, "echo", "\"GET "+spec.Target+"\"", "|")
+		command = append(command, "echo", `"GET "`+spec.Target+`"`, "|")
 	}
 
 	command = append(command, "vegeta", "attack")
